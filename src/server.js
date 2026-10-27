@@ -1,4 +1,6 @@
 'use strict';
+const path = require('path');
+const express = require('express'); // express ইম্পোর্ট করা হলো
 const cfg = require('./config');
 const { createApp } = require('./http');
 const routes = require('./routes');
@@ -6,6 +8,18 @@ const { ensureAdmin, seedDemo } = require('./seed');
 
 function create() {
   const app = createApp({ resolveUser: routes.resolveUser });
+
+ 
+  
+  const demoPath = path.join(__dirname, '../../simple-demo');
+  app.use(express.static(demoPath));
+
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(demoPath, 'index.html'));
+  });
+
+  // -------------------------------------------------------------
+
   routes.register(app);
   ensureAdmin();
   if (cfg.DEMO_ACCOUNTS) seedDemo();
