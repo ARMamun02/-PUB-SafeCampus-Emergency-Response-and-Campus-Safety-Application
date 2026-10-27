@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: pub-safecampus
+    runtime: docker
+    plan: free
+    envVars:
+      - key: TEST_MODE
+        value: "true"
+      - key: DEMO_ACCOUNTS
+        value: "true"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        generateValue: true
